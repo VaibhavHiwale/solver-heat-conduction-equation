@@ -1,0 +1,183 @@
+@@ -0,0 +1,182 @@
+#include<stdio.h>
+#include<math.h>
+
+
+int main()
+{
+  double t0,t1,t2,t3,t4,t5,tn;
+  int Nx=11,it=0; 
+  double max,a,b,c,g,z,Tn[20],Tn1[20],Tn2[20],del_x,del_t,alfa,l;
+  double t[]={0.1,0.5,1.0,2.0,5.0,10.0};
+  
+  printf("\nEnter number of grid points:");
+  scanf("%d",&Nx);
+  
+  printf("\nEnter the total length:");
+  scanf("%lf",&l);
+  
+  del_x=(l/(Nx-1)); //delx calculation
+  
+  printf("\nThe Difference b/w two grid points is : %lf" ,del_x);
+  
+
+  printf("\nEnter the Thermal Diffusion Coefficient:");
+  scanf("%lf",&alfa);
+  
+  printf("\nEnter the Time Step:");
+  scanf("%lf",&del_t);
+  
+  g=(alfa*del_t)/((del_x)*(del_x));
+  
+  printf("\nthe value of gamma %lf:",g);
+  
+  printf("\nThe initial value of all grid points\n");
+  for(int i=1;i<Nx;i++)
+  {
+    Tn[i]=0;
+    printf("%lf ",Tn[i]);
+
+  }
+//time and iteration number relation
+    t0=(0.1/del_t);
+    t1=(0.5/del_t);
+    t2=(1.0/del_t);
+    t3=(2.0/del_t);
+    t4=(5.0/del_t);
+    t5=(10.0/del_t);
+ 
+  
+  //bc
+  printf("\nEnter the boundary condition at first end:");
+  scanf("%lf",&a);
+  printf("\nEnter the boundary condition at last end:");
+  scanf("%lf",&b);
+  
+  //bc
+    Tn[0]=a; 
+    Tn[Nx]=b;
+    
+if(g<0.5)  //gamma relation
+{
+    do
+    {
+     
+    it=(it+1);
+    
+      for(int i=1;i<Nx;i++)
+        {
+            Tn1[i]=(g*Tn[i+1])+((1-(2*g))*Tn[i])+(g*Tn[i-1]);
+            
+        } 
+           
+        //replace
+        for(int k=1;k<Nx;k++)
+            {   
+                Tn2[k] = (Tn1[k]-Tn[k]);
+               
+                Tn[k] = Tn1[k];
+                
+            }
+            
+        if(it==t0)
+            {
+                printf("\n\nIteration number %d", it);
+
+                printf("\nValues at Grid points at time 0.1 sec \n\n");
+            
+                    for(int k=0;k<=Nx;k++)
+                        {
+                            printf("%lf ",Tn[k]);
+                       } 
+            }    
+
+                else if(it==t1)
+                    {
+                            printf("\n\nIteration number %d", it);
+
+                        printf("\nValues at Grid points at time 0.5 sec \n\n");
+            
+                        for(int k=0;k<=Nx;k++)
+                            {
+                                printf("%lf ",Tn[k]);
+                            } 
+                    }
+                
+                else if(it==t2)
+                    {
+                            printf("\n\nIteration number %d", it);
+
+                        printf("\nValues at Grid points at time 1 sec \n\n");
+            
+                        for(int k=0;k<=Nx;k++)
+                            {
+                                printf("%lf ",Tn[k]);
+                            } 
+                    }
+                    
+                else if(it==t3)
+                    {
+                            printf("\n\nIteration number %d", it);
+
+                        printf("\nValues at Grid points at time 2 sec \n\n");
+            
+                        for(int k=0;k<=Nx;k++)
+                            {
+                                printf("%lf ",Tn[k]);
+                            } 
+                    }
+                
+                else if(it==t4)
+                    {
+                            printf("\n\nIteration number %d", it);
+
+                        printf("\nValues at Grid points at time 5 sec \n\n");
+            
+                        for(int k=0;k<=Nx;k++)
+                            {
+                                printf("%lf ",Tn[k]);
+                            } 
+                    }
+                    
+                else if(it==t5)
+                    {
+                            printf("\n\nIteration number %d", it);
+
+                        printf("\nValues at Grid points at time 10 sec \n\n");
+            
+                        for(int k=0;k<=Nx;k++)
+                            {
+                                printf("%lf ",Tn[k]);
+                            } 
+                    }  
+                else
+                {
+                
+                }
+    
+        max = Tn2[1];
+        
+             
+        for (int j = 1; j < Nx; j++) 
+                {
+                    if(Tn2[j] > max)  
+                        {
+                        max = Tn2[j];  
+                        }
+                }
+
+    }while(max>0.000001);
+    
+    tn=(it*del_t);
+    
+    printf("\n\nValues at all the grid points after convergence at iteration number %d and time %lf sec \n",it,tn);
+    for(int i=0;i<=Nx;i++)
+    {
+        printf("%lf ",Tn[i]);
+    }  
+}else{
+    
+    printf("\nThe Value of gamma is %lf and which is greater than 0.5 and hence the solution will not converge",g);
+}
+    return 0;
+}
